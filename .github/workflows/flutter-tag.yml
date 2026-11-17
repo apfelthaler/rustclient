@@ -1,4 +1,4 @@
-name: Flutter Tag Build
+name: RustClient Release Build
 
 on:
   workflow_dispatch:
