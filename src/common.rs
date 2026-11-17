@@ -2515,23 +2515,7 @@ pub fn apply_rustclient_settings() {
     const SERVER: &str = "remote.agnet.at";
     const API_SERVER: &str = "https://remote.agnet.at";
     const KEY: &str = "z3VQaUZvn6wT6c9eQCeyl5Lw+OX91EODSuhHvm37IUI=";
-    // Linux: the packages still install binary, service and desktop file as
-    // "rustdesk", and the Linux code derives those names from the app name.
-    // Until the Linux packaging is renamed, keep the internal name there.
-    #[cfg(not(target_os = "linux"))]
-    {
-        *config::APP_NAME.write().unwrap() = APP_NAME.to_owned();
-    }
-    #[cfg(target_os = "linux")]
-    {
-        let _ = APP_NAME;
-        // is_custom_client() is false with the original name, so switch the
-        // update check against rustdesk.com off explicitly.
-        config::OVERWRITE_LOCAL_SETTINGS
-            .write()
-            .unwrap()
-            .insert(keys::OPTION_ENABLE_CHECK_UPDATE.to_owned(), "N".to_owned());
-    }
+    *config::APP_NAME.write().unwrap() = APP_NAME.to_owned();
     *config::PROD_RENDEZVOUS_SERVER.write().unwrap() = SERVER.to_owned();
     let mut settings = config::OVERWRITE_SETTINGS.write().unwrap();
     for (k, v) in [
