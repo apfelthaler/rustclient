@@ -2540,7 +2540,7 @@ pub fn apply_rustclient_settings() {
         ("api-server", API_SERVER),
         ("key", KEY),
         // only port 443 is open on the server, so WebSocket is mandatory
-        (keys::OPTION_ALLOW_WEBSOCKET, "Y"),
+        ("allow-websocket", "Y"),
     ] {
         settings.insert(k.to_owned(), v.to_owned());
     }
