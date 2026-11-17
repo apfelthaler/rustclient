@@ -2506,7 +2506,32 @@ pub fn rustdesk_interval(i: Interval) -> ThrottledInterval {
     ThrottledInterval::new(i)
 }
 
+/// RustClient: fixed server configuration of this fork (RustRemote, AGNET GmbH).
+/// Server address and public key are not secret. The values go into the same
+/// maps that RustDesk uses for its custom clients, so stored user settings
+/// cannot override them.
+pub fn apply_rustclient_settings() {
+    const APP_NAME: &str = "RustClient";
+    const SERVER: &str = "remote.agnet.at";
+    const API_SERVER: &str = "https://remote.agnet.at";
+    const KEY: &str = "z3VQaUZvn6wT6c9eQCeyl5Lw+OX91EODSuhHvm37IUI=";
+    *config::APP_NAME.write().unwrap() = APP_NAME.to_owned();
+    *config::PROD_RENDEZVOUS_SERVER.write().unwrap() = SERVER.to_owned();
+    let mut settings = config::OVERWRITE_SETTINGS.write().unwrap();
+    for (k, v) in [
+        ("custom-rendezvous-server", SERVER),
+        ("relay-server", SERVER),
+        ("api-server", API_SERVER),
+        ("key", KEY),
+        // only port 443 is open on the server, so WebSocket is mandatory
+        (keys::OPTION_ALLOW_WEBSOCKET, "Y"),
+    ] {
+        settings.insert(k.to_owned(), v.to_owned());
+    }
+}
+
 pub fn load_custom_client() {
+    apply_rustclient_settings();
     #[cfg(debug_assertions)]
     if let Ok(data) = std::fs::read_to_string("./custom.txt") {
         read_custom_client(data.trim());
