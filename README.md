@@ -1,3 +1,8 @@
+> **RustClient** is a fork of [RustDesk](https://github.com/rustdesk/rustdesk) (base: 1.5.3) by AGNET GmbH.
+> It differs from upstream in three points: the server configuration of the RustRemote server
+> (`remote.agnet.at`, WebSocket mode on port 443) is built in, the app is named RustClient, and it
+> carries AGNET icons. Everything else is RustDesk; license and copyright notices are unchanged (AGPL-3.0).
+
 <p align="center">
   <img src="res/logo-header.svg" alt="RustDesk - Your remote desktop"><br>
   <a href="#raw-steps-to-build">Build</a> •
